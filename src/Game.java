@@ -1,4 +1,3 @@
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -24,39 +23,38 @@ public class Game {
     }
 
     public void play() {
-        Choice humanChoice = ask();
+        Choice humanChoice = askChoice();
         Choice computerChoice = randomChoice();
-        printComputerChoice(computerChoice);
+
         Outcome outcome = humanChoice.vs(computerChoice);
-        print(outcome);
+
+        printChoices(humanChoice, computerChoice);
+        printOutcome(outcome);
     }
 
-    private void printComputerChoice(Choice computerChoice) {
-        System.out.println("vs " + toString(computerChoice));
+    private void printChoices(Choice human, Choice computer) {
+        System.out.println(human + " vs " + computer);
     }
 
-    private Choice ask() {
-        System.out.println("Choose: rock, paper, scissors");
-        String answer = new Scanner(System.in).nextLine();
-        Optional<Choice> choice = fromString(answer);
-        return choice.orElseGet(this::ask);
+    private Choice askChoice() {
+        System.out.println("Choose: ROCK, PAPER, SCISSORS");
+
+        Choice choice = choiceFromString(new Scanner(System.in).nextLine());
+
+        if (choice == null) {
+            System.out.println("Invalid choice.");
+            return askChoice();
+        }
+        return choice;
     }
 
-    private String toString(Choice choice) {
-        return choice.toString().toLowerCase();
-    }
-
-    private Optional<Choice> fromString(String string) {
-        String cleanString = string.trim().toLowerCase();
-
+    private Choice choiceFromString(String string) {
         for (Choice choice : Choice.values()) {
-            String choiceString = choice.toString().toLowerCase();
-            if (choiceString.equals(cleanString)) {
-                return Optional.of(choice);
-            }
+            if (choice.toString().equals(string))
+                return choice;
         }
 
-        return Optional.empty();
+        return null;
     }
 
     private Choice randomChoice() {
@@ -64,11 +62,11 @@ public class Game {
         return Choice.values()[choiceIndex];
     }
 
-    private void print(Outcome outcome) {
-        System.out.println(toString(outcome));
+    private void printOutcome(Outcome outcome) {
+        System.out.println(outcomeToString(outcome));
     }
 
-    private String toString(Outcome outcome) {
+    private String outcomeToString(Outcome outcome) {
         switch (outcome) {
             case WIN:  return "You win!";
             case LOSE: return "You lose :(";
