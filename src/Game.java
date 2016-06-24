@@ -1,5 +1,7 @@
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
     enum Outcome {
@@ -22,6 +24,16 @@ public class Game {
         }
     }
 
+    private final InputStream input;
+    private final PrintStream output;
+    private final Random random;
+
+    public Game(InputStream input, PrintStream output, Random random) {
+        this.input = input;
+        this.output = output;
+        this.random = random;
+    }
+
     public void play() {
         Choice humanChoice = askChoice();
         Choice computerChoice = randomChoice();
@@ -33,16 +45,16 @@ public class Game {
     }
 
     private void printChoices(Choice human, Choice computer) {
-        System.out.println(human + " vs " + computer);
+        output.println(human + " vs " + computer);
     }
 
     private Choice askChoice() {
-        System.out.println("Choose: ROCK, PAPER, SCISSORS");
+        output.println("Choose: ROCK, PAPER, SCISSORS");
 
-        Choice choice = choiceFromString(new Scanner(System.in).nextLine());
+        Choice choice = choiceFromString(new Scanner(input).nextLine());
 
         if (choice == null) {
-            System.out.println("Invalid choice.");
+            output.println("Invalid choice.");
             return askChoice();
         }
         return choice;
@@ -58,12 +70,12 @@ public class Game {
     }
 
     private Choice randomChoice() {
-        Integer choiceIndex = ThreadLocalRandom.current().nextInt(0, Choice.values().length);
+        Integer choiceIndex = random.nextInt(Choice.values().length);
         return Choice.values()[choiceIndex];
     }
 
     private void printOutcome(Outcome outcome) {
-        System.out.println(outcomeToString(outcome));
+        output.println(outcomeToString(outcome));
     }
 
     private String outcomeToString(Outcome outcome) {
