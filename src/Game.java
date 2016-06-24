@@ -1,5 +1,7 @@
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -49,20 +51,24 @@ public class Game {
     }
 
     private Choice askChoice() {
-        output.println("Choose: ROCK, PAPER, SCISSORS");
+        List<Choice> options = Arrays.asList(Choice.values());
+        output.println("Choose: " + options);
 
-        Choice choice = choiceFromString(new Scanner(input).nextLine());
+        Choice choice = choiceFrom(options);
 
-        if (choice == null) {
+        while (choice == null) {
             output.println("Invalid choice.");
-            return askChoice();
+            choice = choiceFrom(options);
         }
+
         return choice;
     }
 
-    private Choice choiceFromString(String string) {
-        for (Choice choice : Choice.values()) {
-            if (choice.toString().equals(string))
+    private Choice choiceFrom(List<Choice> options) {
+        String userInput = new Scanner(input).nextLine();
+
+        for (Choice choice : options) {
+            if (choice.toString().equals(userInput))
                 return choice;
         }
 
