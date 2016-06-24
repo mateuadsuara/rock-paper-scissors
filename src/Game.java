@@ -1,10 +1,3 @@
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
-
 public class Game {
     enum Outcome {
         WIN, LOSE, DRAW
@@ -26,70 +19,22 @@ public class Game {
         }
     }
 
-    private final InputStream input;
-    private final PrintStream output;
-    private final Random random;
+    private final Player first;
+    private final Player second;
+    private final Display display;
 
-    public Game(InputStream input, PrintStream output, Random random) {
-        this.input = input;
-        this.output = output;
-        this.random = random;
+    public Game(Player first, Player second, Display display) {
+        this.first = first;
+        this.second = second;
+        this.display = display;
     }
 
     public void play() {
-        Choice humanChoice = askChoice();
-        Choice computerChoice = randomChoice();
+        Choice firstChoice = first.choose();
+        Choice secondChoice = second.choose();
 
-        Outcome outcome = humanChoice.vs(computerChoice);
+        Outcome outcome = firstChoice.vs(secondChoice);
 
-        printChoices(humanChoice, computerChoice);
-        printOutcome(outcome);
-    }
-
-    private void printChoices(Choice human, Choice computer) {
-        output.println(human + " vs " + computer);
-    }
-
-    private Choice askChoice() {
-        List<Choice> options = Arrays.asList(Choice.values());
-        output.println("Choose: " + options);
-
-        Choice choice = choiceFrom(options);
-
-        while (choice == null) {
-            output.println("Invalid choice.");
-            choice = choiceFrom(options);
-        }
-
-        return choice;
-    }
-
-    private Choice choiceFrom(List<Choice> options) {
-        String userInput = new Scanner(input).nextLine();
-
-        for (Choice choice : options) {
-            if (choice.toString().equals(userInput))
-                return choice;
-        }
-
-        return null;
-    }
-
-    private Choice randomChoice() {
-        Integer choiceIndex = random.nextInt(Choice.values().length);
-        return Choice.values()[choiceIndex];
-    }
-
-    private void printOutcome(Outcome outcome) {
-        output.println(outcomeToString(outcome));
-    }
-
-    private String outcomeToString(Outcome outcome) {
-        switch (outcome) {
-            case WIN:  return "You win!";
-            case LOSE: return "You lose :(";
-            case DRAW: return "It is a draw.";
-        }
-        throw new IllegalArgumentException();
+        display.printOutcome(firstChoice, secondChoice, outcome);
     }
 }

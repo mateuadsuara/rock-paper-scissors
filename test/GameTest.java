@@ -10,8 +10,14 @@ public class GameTest {
     public void rockVsRockIsADraw() throws Exception {
         InputStream input = new ByteArrayInputStream("ROCK\n".getBytes());
         OutputStream output = new ByteArrayOutputStream();
+        PrintStream printOutput = new PrintStream(output);
+        HumanPlayer humanPlayer = new HumanPlayer(input, printOutput);
+
         Random random = new Random(0);
-        Game game = new Game(input, new PrintStream(output), random);
+        ComputerPlayer computerPlayer = new ComputerPlayer(random);
+
+        Display display = new Display(printOutput);
+        Game game = new Game(humanPlayer, computerPlayer, display);
 
         game.play();
 
