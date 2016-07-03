@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Scanner;
 
 class HumanPlayer implements Player {
-    private InputStream input;
+    private Scanner scanner;
     private PrintStream output;
 
     public HumanPlayer(InputStream input, PrintStream output) {
-        this.input = input;
+        this.scanner = new Scanner(input);
         this.output = output;
     }
 
@@ -28,7 +28,7 @@ class HumanPlayer implements Player {
     }
 
     private Game.Choice choiceFrom(List<Game.Choice> options) {
-        String userInput = new Scanner(input).nextLine();
+        String userInput = scanner.nextLine();
 
         for (Game.Choice choice : options) {
             if (choice.toString().equals(userInput))
