@@ -17,11 +17,9 @@ class HumanPlayer {
         List<Game.Choice> options = Arrays.asList(Game.Choice.values());
         output.println("Choose: " + options);
 
-        Game.Choice choice = choiceFrom(options);
-
-        while (choice == null) {
+        Game.Choice choice;
+        while ((choice = choiceFrom(options)) == null) {
             output.println("Invalid choice.");
-            choice = choiceFrom(options);
         }
 
         return choice;
