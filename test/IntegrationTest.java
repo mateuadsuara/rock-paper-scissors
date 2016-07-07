@@ -12,9 +12,8 @@ public class IntegrationTest {
         OutputStream output = new ByteArrayOutputStream();
         Random random = new Random(0);
         PrintStream printStream = new PrintStream(output);
-        Game game = new Game(new HumanPlayer(input, printStream), new ComputerPlayer(random), new Display(printStream));
 
-        game.play();
+        Main.run(input, printStream, random);
 
         String expected =
                 "Choose: [ROCK, PAPER, SCISSORS]\n" +

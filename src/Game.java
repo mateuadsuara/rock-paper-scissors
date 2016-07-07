@@ -19,22 +19,7 @@ public class Game {
         }
     }
 
-    private final Player first;
-    private final Player second;
-    private final Display display;
-
-    public Game(Player first, Player second, Display display) {
-        this.first = first;
-        this.second = second;
-        this.display = display;
-    }
-
-    public void play() {
-        Choice firstChoice = first.choose();
-        Choice secondChoice = second.choose();
-
-        Outcome outcome = firstChoice.vs(secondChoice);
-
-        display.printOutcome(firstChoice, secondChoice, outcome);
+    public Outcome play(Choice firstChoice, Choice secondChoice) {
+        return firstChoice.vs(secondChoice);
     }
 }

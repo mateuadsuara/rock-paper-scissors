@@ -64,12 +64,10 @@ public class GameTest {
 
     private DisplaySpy.Call playGame(Game.Choice first, Game.Choice second) {
         DisplaySpy spy = new DisplaySpy();
-        Game game = new Game(
-                new PlayerStub(first),
-                new PlayerStub(second),
-                spy);
+        Game game = new Game();
 
-        game.play();
+        Game.Outcome outcome = game.play(first, second);
+        spy.printOutcome(first, second, outcome);
 
         return spy.lastCall;
     }
