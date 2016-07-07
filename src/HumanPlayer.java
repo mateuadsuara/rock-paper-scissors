@@ -5,27 +5,21 @@ import java.util.List;
 import java.util.Scanner;
 
 class HumanPlayer {
-    private Scanner scanner;
-    private PrintStream output;
+    public static Game.Choice choose(InputStream input, PrintStream output) {
+        Scanner scanner = new Scanner(input);
 
-    public HumanPlayer(InputStream input, PrintStream output) {
-        this.scanner = new Scanner(input);
-        this.output = output;
-    }
-
-    public Game.Choice choose() {
         List<Game.Choice> options = Arrays.asList(Game.Choice.values());
         output.println("Choose: " + options);
 
         Game.Choice choice;
-        while ((choice = choiceFrom(options)) == null) {
+        while ((choice = choiceFrom(scanner, options)) == null) {
             output.println("Invalid choice.");
         }
 
         return choice;
     }
 
-    private Game.Choice choiceFrom(List<Game.Choice> options) {
+    private static Game.Choice choiceFrom(Scanner scanner, List<Game.Choice> options) {
         String userInput = scanner.nextLine();
 
         for (Game.Choice choice : options) {
@@ -35,5 +29,4 @@ class HumanPlayer {
 
         return null;
     }
-
 }

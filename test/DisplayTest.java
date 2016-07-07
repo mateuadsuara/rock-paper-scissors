@@ -39,7 +39,7 @@ public class DisplayTest {
     private String printOutcome(Game.Choice first, Game.Choice second, Game.Outcome outcome) {
         ByteArrayOutputStream output = new ByteArrayOutputStream();
 
-        new Display(new PrintStream(output)).printOutcome(first, second, outcome);
+        Display.printOutcome(new PrintStream(output), first, second, outcome);
 
         return output.toString();
     }

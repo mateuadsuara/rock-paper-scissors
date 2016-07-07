@@ -19,7 +19,7 @@ public class Game {
         }
     }
 
-    public Outcome play(Choice firstChoice, Choice secondChoice) {
+    public static Outcome play(Choice firstChoice, Choice secondChoice) {
         return firstChoice.vs(secondChoice);
     }
 }

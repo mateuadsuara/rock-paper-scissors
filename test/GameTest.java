@@ -49,6 +49,6 @@ public class GameTest {
     }
 
     private Game.Outcome playGame(Game.Choice first, Game.Choice second) {
-        return new Game().play(first, second);
+        return Game.play(first, second);
     }
 }

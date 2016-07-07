@@ -1,13 +1,7 @@
 import java.util.Random;
 
 class ComputerPlayer {
-    private Random random;
-
-    public ComputerPlayer(Random random) {
-        this.random = random;
-    }
-
-    public Game.Choice choose() {
+    public static Game.Choice choose(Random random) {
         Integer choiceIndex = random.nextInt(Game.Choice.values().length);
         return Game.Choice.values()[choiceIndex];
     }

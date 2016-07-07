@@ -9,11 +9,11 @@ public class Main {
     }
 
     public static void run(InputStream in, PrintStream out, Random random) {
-        Game.Choice firstChoice = new HumanPlayer(in, out).choose();
-        Game.Choice secondChoice = new ComputerPlayer(random).choose();
+        Game.Choice firstChoice = HumanPlayer.choose(in, out);
+        Game.Choice secondChoice = ComputerPlayer.choose(random);
 
-        Game.Outcome outcome = new Game().play(firstChoice, secondChoice);
+        Game.Outcome outcome = Game.play(firstChoice, secondChoice);
 
-        new Display(out).printOutcome(firstChoice, secondChoice, outcome);
+        Display.printOutcome(out, firstChoice, secondChoice, outcome);
     }
 }

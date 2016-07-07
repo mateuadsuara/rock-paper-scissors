@@ -53,9 +53,8 @@ public class HumanPlayerTest {
     private HumanPlayerOutput choosing(String input) {
         InputStream inputStream = new ByteArrayInputStream(input.getBytes());
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        HumanPlayer player = new HumanPlayer(inputStream, new PrintStream(output));
 
-        Game.Choice choice = player.choose();
+        Game.Choice choice = HumanPlayer.choose(inputStream, new PrintStream(output));
         String printedOutput = output.toString();
 
         return new HumanPlayerOutput(choice, printedOutput);

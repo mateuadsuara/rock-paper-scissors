@@ -8,10 +8,9 @@ public class ComputerPlayerTest {
     @Test
     public void returnsAllDifferentValues() {
         Random random = new Random();
-        ComputerPlayer fromPlayer = new ComputerPlayer(random);
         int amountOfChoices = Game.Choice.values().length * 100;
 
-        Set<Game.Choice> returnedChoices = asSet(getSomeChoices(fromPlayer, amountOfChoices));
+        Set<Game.Choice> returnedChoices = asSet(getSomeChoices(random, amountOfChoices));
 
         assertEquals(allChoices(), returnedChoices);
     }
@@ -20,8 +19,8 @@ public class ComputerPlayerTest {
     public void returnsDifferentValuesEveryTime() {
         int amountOfChoices = Game.Choice.values().length * 10;
 
-        List<Game.Choice> first = getSomeChoices(new ComputerPlayer(new Random()), amountOfChoices);
-        List<Game.Choice> second = getSomeChoices(new ComputerPlayer(new Random()), amountOfChoices);
+        List<Game.Choice> first = getSomeChoices(new Random(), amountOfChoices);
+        List<Game.Choice> second = getSomeChoices(new Random(), amountOfChoices);
 
         assertNotEquals(first, second);
     }
@@ -30,16 +29,16 @@ public class ComputerPlayerTest {
     public void returnsSameValuesWhenInitializedWithSameSeed() {
         int amountOfChoices = Game.Choice.values().length * 10;
 
-        List<Game.Choice> first = getSomeChoices(new ComputerPlayer(new Random(0)), amountOfChoices);
-        List<Game.Choice> second = getSomeChoices(new ComputerPlayer(new Random(0)), amountOfChoices);
+        List<Game.Choice> first = getSomeChoices(new Random(0), amountOfChoices);
+        List<Game.Choice> second = getSomeChoices(new Random(0), amountOfChoices);
 
         assertEquals(first, second);
     }
 
-    private List<Game.Choice> getSomeChoices(ComputerPlayer fromPlayer, int amount) {
+    private List<Game.Choice> getSomeChoices(Random random, int amount) {
         List<Game.Choice> choices = new ArrayList<>(amount);
         for (int i = 0; i < amount; i ++) {
-            choices.add(fromPlayer.choose());
+            choices.add(ComputerPlayer.choose(random));
         }
         return choices;
     }
