@@ -36,7 +36,7 @@ public class ComputerPlayerTest {
         assertEquals(first, second);
     }
 
-    private List<Game.Choice> getSomeChoices(Player fromPlayer, int amount) {
+    private List<Game.Choice> getSomeChoices(ComputerPlayer fromPlayer, int amount) {
         List<Game.Choice> choices = new ArrayList<>(amount);
         for (int i = 0; i < amount; i ++) {
             choices.add(fromPlayer.choose());
